@@ -154,24 +154,3 @@ aggregates for the **last** row in that statement; the seed data in
 reason. Bulk-loading orders or payments (e.g. from a CSV) would need
 the trigger functions reworked to reference `NEW` directly under
 `FOR EACH ROW` triggers instead of querying `MAX(...logid)`.
-
-## Notes on the rework
-
-The original coursework version built every SQL statement with Python
-string formatting (`"INSERT ... VALUES ({})".format(data)`), which is a
-textbook SQL-injection vector, and stored a live database password in a
-plaintext file committed alongside the code. This version:
-
-- uses parameterised queries (`cur.execute(sql, params)`) throughout —
-  no query string is ever built by interpolating input directly;
-- reads connection details from environment variables via `.env`
-  (gitignored), never hardcoded;
-- widens `book.title`/`book.author` and `customer.name`/`customer.address`
-  from the original `VARCHAR(20)`/`VARCHAR(30)` — tight enough that
-  ordinary book titles and addresses were getting rejected outright;
-- wraps the connection and every transaction in a `BookstoreClient`
-  class instead of loose functions passing a connection object around,
-  with the connection lifecycle handled through the context manager
-  protocol (`with BookstoreClient() as db:`);
-- drops the university-specific assessment material and identifiers
-  that had no place in a public repo.
