@@ -1,0 +1,11 @@
+A#234567#Python Crash Course#Matthes E.#Science#24.22
+C#900001#Jamie Liu#1 High St, Colchester
+E#900001#234567#12
+F#900001#49.99
+G#Python
+H#900001
+I
+J
+B#234567
+D#900001
+X
